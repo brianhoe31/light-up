@@ -10,7 +10,7 @@ class Board extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { board: new Array(this.props.nBox).fill("off") }
+        this.state = { board: this.boardArr(), gameOver: false}
         this.changeColor = this.changeColor.bind(this);
     }
 
@@ -38,7 +38,35 @@ class Board extends Component {
                 }
             })
         }))
+        //check if game over 
+        let on = 0;
+        this.state.board.forEach(e => {
+            if(e === "on"){
+                on++;
+            }
+        })
+
+        if(on === 0){
+            this.setState(st => ({ gameOver: true}));
+        }
     }
+
+    boardArr() {
+        let arr = new Array(this.props.nBox);
+        let rand = function () {
+            return Math.floor(Math.random() * 2);
+        }
+
+        for(var i=0; i< arr.length; i++){
+            if(rand() === 1){
+                arr[i] = "on";
+            }else{
+                arr[i] = "off";
+            }
+        }
+        return arr;
+    }
+
 
     createBoard() {
         return this.state.board.map((stat, idx) => (
@@ -47,10 +75,11 @@ class Board extends Component {
     }
 
     render() {
+        console.log(this.state.nOn);
         return (
             <div className="Board">
                 <h1>Lights Out</h1>
-                <div>{this.createBoard()}</div>
+                <div>{this.state.gameOver ? "Game Over" : this.createBoard()}</div>
             </div>
         )
     }

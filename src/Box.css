@@ -1,0 +1,11 @@
+.Box {
+    width: 20%;
+    height: 150px;
+    display: inline-block;
+    background: darkslateblue;
+    outline: 1px solid white;
+}
+
+.off.Box{
+    background: lightblue;
+}
